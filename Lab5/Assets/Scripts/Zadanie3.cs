@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Zadanie1 : MonoBehaviour
+public class Zadanie3 : MonoBehaviour
 {
     public float elevatorSpeed = 2f;
     private bool isRunning = false;
@@ -11,31 +11,44 @@ public class Zadanie1 : MonoBehaviour
     private bool isRunningDown = false;
     public float downPosition;
     public float upPosition;
-    private Vector3 start = new Vector3(0.0f, 0.0f, 0.0f);
-    private Vector3 end = new Vector3(0.0f, 10.0f, 0.0f);
-    private Vector3 current;
+    public List<Vector3> points = new List<Vector3>();
+    private int current = 0;
+    private bool moveForward = true;
 
-    void Start()
-    {
-        current = start;
-    }
 
     void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, current, elevatorSpeed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, points[current], elevatorSpeed * Time.deltaTime);
 
-        if (Vector3.Distance(transform.position, current) < 0.01f)
+        if (Vector3.Distance(transform.position, points[current]) < 0.01f)
         {
-            current = (current == start) ? end : start;
+            if (moveForward)
+            {
+                current++;
+                if (current == points.Count)
+                {
+                    current = points.Count - 2;
+                    moveForward = false;
+                }
+            }
+            else
+            {
+                current--;
+                if (current < 0)
+                {
+                    current = 1;
+                    moveForward = true;
+                }
+            }
         }
     }
 
-    private void OnTriggerEnter (Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Player wszed≈Ç na windƒô.");
-           
+            Debug.Log("Player wszed≥ na windÍ.");
+
             if (transform.position.y >= upPosition)
             {
                 isRunningDown = true;
@@ -56,7 +69,7 @@ public class Zadanie1 : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Player zszed≈Ç z windy.");
+            Debug.Log("Player zszed≥ z windy.");
         }
     }
 }
