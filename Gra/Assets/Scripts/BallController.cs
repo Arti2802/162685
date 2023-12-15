@@ -71,7 +71,7 @@ public class BallController : MonoBehaviour
         }
         if(collision.gameObject.CompareTag("Ground"))
         {
-            float bounce = 24f;
+            float bounce = 8f;
             rb.AddForce(collision.contacts[0].normal * bounce);
             ChangePoints();
         }

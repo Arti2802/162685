@@ -33,6 +33,9 @@ public class ScoreManager : MonoBehaviour
         Debug.Log(points1 + " : " + points2);
         if ((points1 >= 5 || points2 >= 5) && Mathf.Abs(points1 - points2) >= 2)
         {
+            source.PlayOneShot(clip);
+            Debug.Log("Koniec seta!");
+            info.text = "Koniec seta!";
             StartCoroutine(Delay(ChangeSets));
         }
     }
@@ -43,10 +46,6 @@ public class ScoreManager : MonoBehaviour
     }
     void ChangeSets()
     {
-        source.PlayOneShot(clip);
-        Debug.Log("Koniec seta!");
-        info.text = "Koniec seta!";
-        source.PlayOneShot(clip);
         if (points1 > points2)
         {
             sets1++;
